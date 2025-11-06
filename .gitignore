@@ -1,0 +1,12 @@
+# Ignorar node_modules en todo el proyecto
+node_modules/
+
+# Archivos de entorno
+.env
+
+# Logs
+*.log
+
+# Compilados y dist
+dist/
+build/
