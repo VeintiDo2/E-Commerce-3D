@@ -15,7 +15,7 @@ type Product = {
     description: string;
     price: number;
     stock: number;
-    productImage: string;
+    productImageUrl: string;
     specs: Record<string, specs>;
 };
 
@@ -49,7 +49,7 @@ const ProductDetails = () => {
             <>
                 {Object.values(product.specs).map(spec =>
                     <section key={(spec?.key)} className="w-full flex flex-row gap-2 rounded border border-blue-500">
-                        <span className="min-w-75 h-full flex items-center bg-blue-500 p-1 rounded-l-1xl">
+                        <span className="lg:min-w-100 min-w-55 h-full flex items-center bg-blue-500 p-1 rounded-l-1xl">
                             {spec?.key}
                         </span>
                         <span className="p-1">
@@ -62,19 +62,19 @@ const ProductDetails = () => {
     }
 
     return (
-        <section className="w-full h-full flex flex-wrap gap-2 max-w-600 rounded-lg p-2 overflow-y-auto border border-black bg-gray-900 text-white"
+        <section className="w-full h-full flex flex-wrap gap-2 max-w-350 rounded-lg p-2 overflow-y-auto border border-black bg-gray-900 text-white"
             style={{ scrollbarWidth: "thin", scrollbarColor: "#4a90e2 #2d3748", scrollBehavior: "smooth" }}>
             <article className="w-full h-auto flex flex-col lg:flex-row items-center gap-4 rounded p-2 border border-black bg-gray-800">
 
                 <div className="w-full lg:w-1/2">
                     <img
                         className="w-full h-full aspect-square object-cover rounded select-none"
-                        src={product ? `http://localhost:5000/${product.productImage}` : undefined}
+                        src={product ? `http://localhost:5000/${product.productImageUrl}` : undefined}
                         alt={product?.name || "Producto"}
                     />
                 </div>
 
-                <aside className="w-full h-full flex  justify-between flex-col">
+                <aside className="w-full h-full flex justify-between flex-col">
                     <div>
                         <span className="text-4xl font-semibold pl-1 w-full">
                             {product ? product.name : "Cargando..."}
@@ -128,7 +128,7 @@ const ProductDetails = () => {
                 <ProductDetail />
             </article>
 
-            <article className="p-2 rounded border border-black bg-gray-800">
+            {/* <article className="p-2 rounded border border-black bg-gray-800">
                 <span className="w-full text-2xl">Relacionados</span>
                 <div className="overflow-x-auto snap-x scroll-smooth pt-2 w-full">
                     <div className="flex flex-row gap-4">
@@ -139,7 +139,7 @@ const ProductDetails = () => {
                         ))}
                     </div>
                 </div>
-            </article>
+            </article> */}
 
         </section>
     )

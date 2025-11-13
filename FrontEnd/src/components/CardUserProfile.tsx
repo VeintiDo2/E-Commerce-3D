@@ -9,7 +9,9 @@ const CardUserProfile = ({ setIsHovered }: { setIsHovered: (isHovered: boolean) 
             onMouseLeave={() => setIsHovered(false)}>
             <div className="flex items-center justify-center">
                 <div className="w-15"></div>
-                <img className="absolute -left-3.5 w-20 rounded-full select-none" src={`http://localhost:5000/${user?.userImageUrl}`} alt="UserIcon" />
+                <img className="absolute -left-3.5 w-20 rounded-full select-none"
+                    src={`http://localhost:5000/${user?.userImageUrl}`}
+                    alt={user?.username} />
             </div>
             <div className="flex flex-col justify-start items-start gap-2 p-1 overflow-hidden">
                 <p className="text-xl">{user?.name}</p>

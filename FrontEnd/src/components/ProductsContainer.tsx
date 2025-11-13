@@ -9,14 +9,14 @@ type Product = {
     name: string;
     description: string;
     price: number;
-    productImage: string;
+    productImageUrl: string;
 };
 
 const ProductsContainer = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const lastScrollTop = useRef(0);
     const [showButton, setShowButton] = useState(false);
-    
+
     const { filters } = useProduct();
     const [message, setMessage] = useState("");
     const [categoryExists, setCategoryExists] = useState(true);
@@ -25,7 +25,7 @@ const ProductsContainer = () => {
     const scrollToTop = () => {
         containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
     };
-    
+
     useEffect(() => {
         console.table(filters);
         axios
@@ -78,7 +78,7 @@ const ProductsContainer = () => {
     return (
         <div
             ref={containerRef}
-            className="relative h-full w-full max-w-600 flex flex-col items-start gap-2 p-2 overflow-y-auto bg-gray-900 text-white rounded-lg shadow-blue-950 border border-black shadow-[0_3px_10px_rgb(0,0,0,0.5)]"
+            className="relative h-full w-full max-w-600 p-2 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-1 gap-3 overflow-y-auto bg-gray-900 text-white rounded-lg shadow-blue-950 border border-black shadow-[0_3px_10px_rgb(0,0,0,0.5)]" 
             style={{ scrollbarWidth: "thin", scrollbarColor: "#4a90e2 #2d3748" }}
         >
             {showButton && (

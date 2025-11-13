@@ -52,7 +52,7 @@ const Aside = () => {
                 <ButtonModel
                     text="Favoritos"
                     type="invisible"
-                    route="/"
+                    route="/WishList"
                     iconName="star"
                     sizeClass="size-6"
                 />

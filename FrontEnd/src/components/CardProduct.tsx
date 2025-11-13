@@ -8,7 +8,7 @@ type Product = {
     name: string;
     description: string;
     price: number;
-    productImage: string;
+    productImageUrl: string;
 }
 
 const CardProduct = ({ product }: { product: Product }) => {
@@ -16,22 +16,22 @@ const CardProduct = ({ product }: { product: Product }) => {
     const { setSelectedProductID } = useProduct();
 
     return (
-        <div className="w-full max-w-600 min-w-150 bg-gray-800 rounded flex flex-row transition duration-300 ease-in-out hover:-translate-y-0.5 cursor-pointer hover:shadow-xl border-2 border-black"
+        <div className="flex flex-col md:flex-col lg:flex-row w-full md:h-100 lg:h-50 bg-gray-800 rounded-lg overflow-hidden border-2 border-black shadow-lg transition-transform duration-300 hover:-translate-y-1 cursor-pointer"
             onClick={() => {
                 navigate("/Product");
                 setSelectedProductID(product._id);
             }}>
-            <div>
+            <div className="flex items-center justify-center">
                 <img
-                    className="w-100 h-auto object-contain rounded-l select-none"
-                    src={`http://localhost:5000/${product.productImage}`}
+                    className="object-contain bg-black w-full lg:w-40 md:w-75 aspect-square"
+                    src={`http://localhost:5000/${product.productImageUrl}`}
                     alt={product.name}
                 />
             </div>
             <div className="w-full p-1 flex flex-col gap-2 justify-between">
-                <div className="ml-2 flex flex-col gap-1 grow">
-                    <span className="text-2xl">{product.name}</span>
-                    <p className="text-sm text-gray-400">
+                <div className="ml-2 flex flex-col gap-1 grow text-wrap">
+                    <span className="lg:text-2xl text-sm">{product.name}</span>
+                    <p className="lg:text-sm text-xs text-gray-400">
                         {product.description}
                     </p>
                 </div>

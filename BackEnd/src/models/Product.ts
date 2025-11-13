@@ -11,7 +11,7 @@ export interface InterfaceProduct extends Document {
     description: string;
     category: string;
     brand: string;
-    productImageUrl?: string;
+    productImageUrl: string;
     stock: number;
     specs: Specs[];
 };
@@ -30,7 +30,7 @@ const productSchema = new Schema<InterfaceProduct>(
         description: { type: String, required: true },
         category: { type: String, required: true },
         brand: { type: String, required: true },
-        productImageUrl: { type: String, required: false },
+        productImageUrl: { type: String, required: true },
         stock: { type: Number, required: true, min: 0, default: 0 },
         specs: { type: [specSchema], default: [] },
     },

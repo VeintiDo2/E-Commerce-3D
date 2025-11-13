@@ -48,7 +48,7 @@ const Login: React.FC = () => {
             if (response.data.success) {
                 console.table(response.data.user)
                 setUser(response.data.user);
-                navigate("/store");
+                navigate("/");
             }
         } catch (error) {
             console.error("Error al iniciar Sesión", error);
