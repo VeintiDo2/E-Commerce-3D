@@ -48,8 +48,8 @@ const ProductDetails = () => {
         return (
             <>
                 {Object.values(product.specs).map(spec =>
-                    <section key={(spec?.key)} className="w-full flex flex-row gap-2 rounded border border-blue-500">
-                        <span className="lg:min-w-100 min-w-55 h-full flex items-center bg-blue-500 p-1 rounded-l-1xl">
+                    <section key={(spec?.key)} className="w-full text-sm lg:text-base md:text-base flex flex-row gap-2 rounded border border-blue-500">
+                        <span className="min-w-1/2 h-full flex items-center bg-blue-500 p-1 rounded-l-1xl">
                             {spec?.key}
                         </span>
                         <span className="p-1">
@@ -92,7 +92,6 @@ const ProductDetails = () => {
                                 iconName="star"
                                 defaultColor="text-white"
                                 activeColor="text-yellow-400"
-                                sizeClass="w-6"
                                 buttonFunction={(e) => {
                                     e.stopPropagation();
                                     console.log("Favorito");
@@ -103,7 +102,6 @@ const ProductDetails = () => {
                                 type="primary"
                                 iconName="cart"
                                 text="Agregar Producto"
-                                sizeClass="w-6"
                                 buttonFunction={(e) => {
                                     e.stopPropagation();
                                     console.log("Comprar");
@@ -127,20 +125,6 @@ const ProductDetails = () => {
                 <span className="w-full text-2xl">Detalles</span>
                 <ProductDetail />
             </article>
-
-            {/* <article className="p-2 rounded border border-black bg-gray-800">
-                <span className="w-full text-2xl">Relacionados</span>
-                <div className="overflow-x-auto snap-x scroll-smooth pt-2 w-full">
-                    <div className="flex flex-row gap-4">
-                        {Array(6).fill(0).map((_, i) => (
-                            <div key={i} className="snap-center shrink-0">
-                                <img className="w-100 h-auto rounded" src="/Images/Icono Dust.png" alt={`Imagen ${i}`} />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </article> */}
-
         </section>
     )
 }

@@ -110,7 +110,6 @@ const Login: React.FC = () => {
                                 text="Registrarse"
                                 type="primary"
                                 isSubmitButton={true}
-                                sizeClass="w-6"
                             />
                             <div className="mt-4 text-gray-400">
                                 ¿Ya tiene una cuenta? <span className="text-blue-500 cursor-pointer" onClick={() => setIsRegistering(false)}>Inicie sesión aquí</span>
@@ -131,7 +130,6 @@ const Login: React.FC = () => {
                                 text="Iniciar Sesión"
                                 type="primary"
                                 isSubmitButton={true}
-                                sizeClass="w-6"
                             />
                             <div className="mt-4 text-gray-400">
                                 ¿No tienes una cuenta? <span className="text-blue-500 cursor-pointer" onClick={() => setIsRegistering(true)}>Regístrate aquí</span>

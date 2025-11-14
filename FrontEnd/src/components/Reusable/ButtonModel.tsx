@@ -11,11 +11,10 @@ type ButtonProps = {
     iconName?: keyof typeof icons,
     defaultColor?: string,
     activeColor?: string,
-    sizeClass?: string,
     buttonFunction?: (event: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
-const ButtonModel = ({ text, type, isSubmitButton, route, iconName, defaultColor, activeColor, sizeClass, buttonFunction }:ButtonProps) => {
+const ButtonModel = ({ text, type, isSubmitButton, route, iconName, defaultColor, activeColor, buttonFunction }: ButtonProps) => {
     const navigate = useNavigate();
     const [iconColor, setIconColor] = useState(defaultColor);
     const [active, setActive] = useState(false);
@@ -33,19 +32,29 @@ const ButtonModel = ({ text, type, isSubmitButton, route, iconName, defaultColor
 
     return (
         <button
-            className={`${buttonStyles[type]} ${iconColor}`}
-            type={`${isSubmitButton ? "submit" : "button"}`}
+            className={`${buttonStyles[type]} ${iconColor} flex items-center gap-2`}
+            type={isSubmitButton ? "submit" : "button"}
             onClick={(e) => {
                 handleCheckRoute();
                 handleToggleColor();
-                if (typeof buttonFunction === "function") {
-                    buttonFunction(e);
-                }
+                if (typeof buttonFunction === "function") buttonFunction(e);
             }}
         >
-            {iconName && <span className={`${sizeClass} ${text ? "mr-2" : null}`}>{icons[iconName]}</span>}
-            {text}
+            {iconName && (
+                <span className="flex items-center justify-center w-5 h-5 md:w-6 md:h-6">
+                    {icons[iconName]}
+                </span>
+            )}
+
+            {/* Texto oculto en pantallas pequeñas para hacerlo responsive */}
+            {text && (
+                <span className="hidden sm:inline text-sm md:text-base lg:text-lg">
+                    {text}
+                </span>
+            )}
         </button>
+
+
     );
 };
 

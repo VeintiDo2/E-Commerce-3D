@@ -86,7 +86,6 @@ const ProductsContainer = () => {
                     <ButtonModel
                         type="fixed"
                         iconName="arrowUp"
-                        sizeClass="size-6"
                         buttonFunction={scrollToTop}
                     />
                 </div>

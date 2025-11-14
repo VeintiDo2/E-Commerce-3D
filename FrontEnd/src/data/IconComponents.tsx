@@ -1,6 +1,7 @@
 import {
     HomeIcon, ShoppingCartIcon, UsersIcon, CurrencyDollarIcon, ArrowUpIcon, LockClosedIcon,
     EnvelopeIcon, IdentificationIcon, UserIcon, ArrowLeftStartOnRectangleIcon, MagnifyingGlassIcon,
+    Bars3Icon,
 } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/24/solid';
 
@@ -17,5 +18,6 @@ export const icons = {
     id: <IdentificationIcon />,
     user: <UserIcon />,
     close: <ArrowLeftStartOnRectangleIcon />,
-    search: <MagnifyingGlassIcon />
+    search: <MagnifyingGlassIcon />,
+    menu: <Bars3Icon />,
 } as const;
