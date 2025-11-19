@@ -33,7 +33,7 @@ const ProductsFilter = () => {
     }
 
     return (
-        <header className="w-full flex justify-center items-center flex-row p-2 bg-gray-900 border border-black rounded-lg text-white">
+        <header className="w-full flex justify-center items-center max-w-[2400px] flex-row p-2 bg-gray-900 border border-black rounded-lg text-white">
             <article className=" flex-col w-full max-w-600 flex items-center justify-between gap-2">
 
                 <div className="w-full flex justify-center items-center">

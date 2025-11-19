@@ -78,7 +78,12 @@ const ProductsContainer = () => {
     return (
         <div
             ref={containerRef}
-            className="relative h-full w-full max-w-600 p-2 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-1 gap-3 overflow-y-auto bg-gray-900 text-white rounded-lg shadow-blue-950 border border-black shadow-[0_3px_10px_rgb(0,0,0,0.5)]" 
+            className="relative h-full w-full max-w-[2400px] p-2
+grid grid-cols-2 lg:grid-cols-1
+gap-3 overflow-y-auto
+bg-gray-900 text-white rounded-lg
+shadow-blue-950 border border-black
+shadow-[0_3px_10px_rgb(0,0,0,0.5)]"
             style={{ scrollbarWidth: "thin", scrollbarColor: "#4a90e2 #2d3748" }}
         >
             {showButton && (

@@ -16,7 +16,7 @@ const CardProduct = ({ product }: { product: Product }) => {
     const { setSelectedProductID } = useProduct();
 
     return (
-        <div className="flex flex-col md:flex-col lg:flex-row w-full md:h-125 lg:h-50 bg-gray-800 rounded-lg overflow-hidden border-2 border-black shadow-lg transition-transform duration-300 hover:-translate-y-1 cursor-pointer"
+        <div className="flex flex-col lg:flex-row w-full md:h-125 lg:h-50 bg-gray-800 rounded-lg overflow-hidden border-2 border-black shadow-lg transition-transform duration-300 hover:-translate-y-1 cursor-pointer"
             onClick={() => {
                 navigate("/Product");
                 setSelectedProductID(product._id);

@@ -11,10 +11,11 @@ type ButtonProps = {
     iconName?: keyof typeof icons,
     defaultColor?: string,
     activeColor?: string,
+    showText?: boolean
     buttonFunction?: (event: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
-const ButtonModel = ({ text, type, isSubmitButton, route, iconName, defaultColor, activeColor, buttonFunction }: ButtonProps) => {
+const ButtonModel = ({ text, type, isSubmitButton, route, iconName, defaultColor, activeColor, showText, buttonFunction }: ButtonProps) => {
     const navigate = useNavigate();
     const [iconColor, setIconColor] = useState(defaultColor);
     const [active, setActive] = useState(false);
@@ -48,7 +49,7 @@ const ButtonModel = ({ text, type, isSubmitButton, route, iconName, defaultColor
 
             {/* Texto oculto en pantallas pequeñas para hacerlo responsive */}
             {text && (
-                <span className="hidden sm:inline text-sm md:text-base lg:text-lg">
+                <span className={`${showText ? "inline" : "hidden"} sm:inline text-sm md:text-base lg:text-lg`}>
                     {text}
                 </span>
             )}
