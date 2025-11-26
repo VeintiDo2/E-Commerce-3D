@@ -3,7 +3,7 @@ import {
     EnvelopeIcon, IdentificationIcon, UserIcon, ArrowLeftStartOnRectangleIcon, MagnifyingGlassIcon,
     Bars3Icon,
 } from '@heroicons/react/24/outline';
-import { StarIcon } from '@heroicons/react/24/solid';
+import { StarIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
 
 // Iconos utilizados en el proyecto.
 export const icons = {
@@ -20,4 +20,5 @@ export const icons = {
     close: <ArrowLeftStartOnRectangleIcon />,
     search: <MagnifyingGlassIcon />,
     menu: <Bars3Icon />,
+    settings: < Cog6ToothIcon />
 } as const;

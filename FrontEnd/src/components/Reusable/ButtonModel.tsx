@@ -11,11 +11,12 @@ type ButtonProps = {
     iconName?: keyof typeof icons,
     defaultColor?: string,
     activeColor?: string,
-    showText?: boolean
+    showText?: boolean,
+    animateSpin?: boolean,
     buttonFunction?: (event: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
-const ButtonModel = ({ text, type, isSubmitButton, route, iconName, defaultColor, activeColor, showText, buttonFunction }: ButtonProps) => {
+const ButtonModel = ({ text, type, isSubmitButton, route, iconName, defaultColor, activeColor, showText, animateSpin, buttonFunction }: ButtonProps) => {
     const navigate = useNavigate();
     const [iconColor, setIconColor] = useState(defaultColor);
     const [active, setActive] = useState(false);
@@ -42,7 +43,7 @@ const ButtonModel = ({ text, type, isSubmitButton, route, iconName, defaultColor
             }}
         >
             {iconName && (
-                <span className="flex items-center justify-center w-5 h-5 md:w-6 md:h-6">
+                <span className={`flex items-center justify-center w-5 md:w-6 lg:w-6 ${animateSpin ? "hover:animate-spin" : ""}`}>
                     {icons[iconName]}
                 </span>
             )}

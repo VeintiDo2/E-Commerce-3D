@@ -2,20 +2,23 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import ButtonModel from "./Reusable/ButtonModel.tsx";
 import { useProduct } from "../context/ContexProduct.tsx";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
 type specs = {
     key: string,
     value: string
 }
 
+type Images = {
+    stockImage: string;
+    images: string[];
+}
+
 type Product = {
     _id: string;
     name: string;
-    description: string;
     price: number;
-    stock: number;
-    productImageUrl: string;
+    description: string;
+    images: Images;
     specs: Record<string, specs>;
 };
 
@@ -69,7 +72,7 @@ const ProductDetails = () => {
                 <div className="w-full lg:w-1/2">
                     <img
                         className="w-full h-full aspect-square object-cover rounded select-none"
-                        src={product ? `http://localhost:5000/${product.productImageUrl}` : undefined}
+                        src={product ? `http://localhost:5000/${product.images.stockImage}` : undefined}
                         alt={product?.name || "Producto"}
                     />
                 </div>
@@ -107,16 +110,6 @@ const ProductDetails = () => {
                                     console.log("Comprar");
                                 }}
                             />
-
-                            <div className="relative">
-                                <select className="appearance-none cursor-pointer grow  bg-gray-800 border border-blue-500 p-2 rounded-br-lg pr-10">
-                                    {[...Array(product?.stock)].map((_, i) => (
-                                        <option key={i} value={i + 1}>Cantidad: {i + 1}</option>
-                                    ))}
-                                </select>
-                                <ChevronDownIcon className="absolute right-2 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500 pointer-events-none" />
-                            </div>
-
                         </div>
                     </div>
                 </aside>

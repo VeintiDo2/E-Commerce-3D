@@ -5,16 +5,26 @@ type Specs = {
     value: string;
 }
 
+type Images = {
+    stockImage: string;
+    images: string[];
+}
+
 export interface InterfaceProduct extends Document {
     name: string;
     price: number;
     description: string;
     category: string;
-    brand: string;
-    productImageUrl: string;
-    stock: number;
+    vertexNumber: number;
+    textured: boolean;
+    images: Images;
     specs: Specs[];
 };
+
+const imagesSchema = new Schema<Images>({
+    stockImage: { type: String, required: true },
+    images: [{ type: String, required: true }],
+})
 
 const specSchema = new Schema<Specs>({
     key: { type: String, required: true },
@@ -29,9 +39,9 @@ const productSchema = new Schema<InterfaceProduct>(
         price: { type: Number, required: true, min: 0 },
         description: { type: String, required: true },
         category: { type: String, required: true },
-        brand: { type: String, required: true },
-        productImageUrl: { type: String, required: true },
-        stock: { type: Number, required: true, min: 0, default: 0 },
+        vertexNumber: { type: Number, required: true, min: 0 },
+        textured: { type: Boolean, required: true },
+        images: { type: imagesSchema, required: true },
         specs: { type: [specSchema], default: [] },
     },
     { timestamps: true }

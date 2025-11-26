@@ -17,7 +17,7 @@ const Aside = () => {
     const { isMenuActive, setIsMenuActive } = useSidePanel();
 
     return (
-        <section className="flex flex-row min-w-60 grow justify-end md:justify-start lg:justify-start items-center gap-5 p-3 border bg-gray-900 text-white rounded-lg border-black shadow-[0_3px_10px_rgb(0,0,0,0.5)] shadow-blue-950">
+        <section className="flex flex-row min-w-60  justify-end md:justify-start lg:justify-start items-center gap-5 p-3 border bg-gray-900 text-white rounded-lg border-black shadow-[0_3px_10px_rgb(0,0,0,0.5)] shadow-blue-950">
 
             {/* Aside en teléfono (Se oculta en PC y Tablet) */}
 

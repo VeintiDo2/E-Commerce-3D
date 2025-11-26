@@ -4,12 +4,17 @@ import { useProduct } from "../context/ContexProduct.tsx";
 import CardProduct from "./CardProduct";
 import ButtonModel from "./Reusable/ButtonModel.tsx";
 
+type Images = {
+    stockImage: string;
+    images: string[];
+}
+
 type Product = {
     _id: string;
     name: string;
-    description: string;
     price: number;
-    productImageUrl: string;
+    description: string;
+    images: Images;
 };
 
 const ProductsContainer = () => {
@@ -78,16 +83,13 @@ const ProductsContainer = () => {
     return (
         <div
             ref={containerRef}
-            className="relative h-full w-full max-w-[2400px] p-2
-grid grid-cols-2 lg:grid-cols-1
-gap-3 overflow-y-auto
-bg-gray-900 text-white rounded-lg
-shadow-blue-950 border border-black
-shadow-[0_3px_10px_rgb(0,0,0,0.5)]"
+            className={`relative grid grid-cols-2 md:flex md:flex-col lg:flex lg:flex-col items-start w-full h-screen p-3 gap-2 overflow-y-auto 
+                bg-gray-900 text-white rounded-lg shadow-blue-950 border
+                border-black shadow-[0_3px_10px_rgb(0,0,0,0.5)]`}
             style={{ scrollbarWidth: "thin", scrollbarColor: "#4a90e2 #2d3748" }}
         >
             {showButton && (
-                <div className="absolute bottom-2 right-2 z-10 animate-fade animate-once animate-ease-in-out">
+                <div className="absolute bottom-2 right-2 z-10">
                     <ButtonModel
                         type="fixed"
                         iconName="arrowUp"
