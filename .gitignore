@@ -1,6 +1,9 @@
 # Ignorar node_modules en todo el proyecto
 node_modules/
 
+# Ignorar archivos de los modelos 3D
+3dModels/
+
 # Archivos de entorno
 .env
 

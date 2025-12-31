@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 type ButtonProps = {
     text?: string,
     type: keyof typeof buttonStyles,
+    title?: string,
     isSubmitButton?: boolean,
     route?: string,
     iconName?: keyof typeof icons,
@@ -16,7 +17,7 @@ type ButtonProps = {
     buttonFunction?: (event: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
-const ButtonModel = ({ text, type, isSubmitButton, route, iconName, defaultColor, activeColor, showText, animateSpin, buttonFunction }: ButtonProps) => {
+const ButtonModel = ({ text, type, title, isSubmitButton, route, iconName, defaultColor, activeColor, showText, animateSpin, buttonFunction }: ButtonProps) => {
     const navigate = useNavigate();
     const [iconColor, setIconColor] = useState(defaultColor);
     const [active, setActive] = useState(false);
@@ -36,6 +37,7 @@ const ButtonModel = ({ text, type, isSubmitButton, route, iconName, defaultColor
         <button
             className={`${buttonStyles[type]} ${iconColor} flex items-center gap-2`}
             type={isSubmitButton ? "submit" : "button"}
+            title={title}
             onClick={(e) => {
                 handleCheckRoute();
                 handleToggleColor();

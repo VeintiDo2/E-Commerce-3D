@@ -34,7 +34,7 @@ const CardProduct = ({ product }: { product: Product }) => {
             {/* Imagen */}
             <div className="flex items-center justify-center">
                 <img
-                    className="object-contain h-50 lg:h-100 bg-black w-full md:w-75 aspect-square select-none"
+                    className="object-contain h-50 lg:h-100 w-full md:w-75 aspect-square select-none"
                     src={`http://localhost:5000/${product.images.stockImage}`}
                     alt={product.name}
                 />

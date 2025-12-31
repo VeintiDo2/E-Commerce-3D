@@ -11,6 +11,9 @@ export const buttonStyles: Record<string, string> = {
     onlyIconSmall:
         "rounded-lg border-2 border-transparent bg-blue-500 cursor-pointer hover:bg-blue-600 transition",
 
+    onlyIconInvisible:
+        "rounded-full bg-gray-700/50 cursor-pointer hover:bg-gray-600/50 hover:scale-105 border border-transparent p-2 transition",
+
     invisible:
         "w-full py-2 px-2 rounded transition cursor-pointer hover:bg-gray-800",
 

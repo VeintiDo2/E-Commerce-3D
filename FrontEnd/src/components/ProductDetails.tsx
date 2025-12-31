@@ -2,16 +2,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import ButtonModel from "./Reusable/ButtonModel.tsx";
 import { useProduct } from "../context/ContexProduct.tsx";
+import ImageCarrousel from './ImagesCarrousel.tsx';
+import ModelViewer from './3D/ModelViewer.tsx';
+import { useModelViewer } from '../context/ContexModelViewer.tsx';
 
-type specs = {
-    key: string,
-    value: string
-}
-
-type Images = {
-    stockImage: string;
-    images: string[];
-}
+type questions = { key: string; value: string };
+type Images = { stockImage: string; images: string[] };
 
 type Product = {
     _id: string;
@@ -19,107 +15,191 @@ type Product = {
     price: number;
     description: string;
     images: Images;
-    specs: Record<string, specs>;
+    vertexNumber: number;
+    textured: boolean;
+    rigging: boolean;
+    uvWrapped: boolean;
+    questions: Record<string, questions>;
+    objectURL: string;
 };
 
 const ProductDetails = () => {
     const productContext = useProduct();
     const selectedProductID = productContext?.selectedProductID ?? "";
-    const [product, setProduct] = useState<Product | null>(() => {
-        // El "localStorage" sirve para guardar datos en el navegador del usuario.
-        // Intentar obtener los datos guardados del `localStorage`
-        const savedIDProduct = localStorage.getItem('product');
-        return savedIDProduct ? JSON.parse(savedIDProduct) : null;
-    });
+    const { setIsViewerActive, setObjectURL } = useModelViewer();
+
+    const [product, setProduct] = useState<Product | null>(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
+
+        if (!selectedProductID) {
+            const saved = localStorage.getItem("product");
+            if (saved) {
+                setProduct(JSON.parse(saved));
+            }
+            setLoading(false);
+            return;
+        }
+
         axios.get(`http://localhost:5000/api/products/${selectedProductID}`)
             .then(response => {
                 setProduct(response.data.product);
             })
-    }, [selectedProductID])
+            .finally(() => {
+                setLoading(false);
+            });
+
+    }, [selectedProductID]);
+
 
     useEffect(() => {
         if (product) {
-            localStorage.setItem('product', JSON.stringify(product));
+            localStorage.setItem("product", JSON.stringify(product));
         }
     }, [product]);
 
-    const ProductDetail = () => {
-        if (!product || !product.specs) return <span>Cargando detalles...</span>;
+    const ProductQuestions = () => {
+        if (!product || !product.questions) return <span>Cargando detalles...</span>;
 
         return (
             <>
-                {Object.values(product.specs).map(spec =>
-                    <section key={(spec?.key)} className="w-full text-sm lg:text-base md:text-base flex flex-row gap-2 rounded border border-blue-500">
-                        <span className="min-w-1/2 h-full flex items-center bg-blue-500 p-1 rounded-l-1xl">
-                            {spec?.key}
-                        </span>
-                        <span className="p-1">
-                            {spec?.value}
-                        </span>
+                {Object.values(product.questions).map((question) => (
+                    <section
+                        key={question.key}
+                        className="w-full text-sm lg:text-base flex flex-col gap-2 rounded border border-blue-500"
+                    >
+                        <span className="bg-blue-500 p-1">{question.key}</span>
+                        <span className="p-1">{question.value}</span>
                     </section>
-                )}
+                ))}
             </>
+        );
+    };
+
+    const Details = () => {
+        if (!product) return <span>Cargando detalles...</span>;
+        return (
+            <div className="w-full text-sm lg:text-base flex flex-col gap-2 rounded border border-blue-500">
+                <span className="bg-blue-500 p-1">Detalles</span>
+                <div className='h-full p-1 flex flex-col justify-between'>
+                    <span><p className='font-semibold'>Cantidad de vertices:</p> {product.vertexNumber}</span>
+                    <span><p className='font-semibold'>Rig:</p> {product.rigging ? "Si" : "No"}</span>
+                    <span><p className='font-semibold'>Texturizado:</p> {product.textured ? "Si" : "No"}</span>
+                    <span><p className='font-semibold'>UV Wrapped:</p> {product.uvWrapped ? "Si" : "No"}</span>
+                </div>
+            </div>
         )
     }
 
-    return (
-        <section className="w-full h-full flex flex-wrap gap-2 max-w-350 rounded-lg p-2 overflow-y-auto border border-black bg-gray-900 text-white"
-            style={{ scrollbarWidth: "thin", scrollbarColor: "#4a90e2 #2d3748", scrollBehavior: "smooth" }}>
-            <article className="w-full h-auto flex flex-col lg:flex-row items-center gap-4 rounded p-2 border border-black bg-gray-800">
+    const interactionButton = (active: boolean, url: string) => {
+        return (
+            <div className="absolute bottom-1 right-1">
+                <ButtonModel
+                    type="primary"
+                    iconName="cube"
+                    text="Interactuar"
+                    buttonFunction={() => {
+                        setIsViewerActive(active);
+                        setObjectURL(url);
+                    }}
+                />
+            </div>
+        )
+    }
 
-                <div className="w-full lg:w-1/2">
-                    <img
-                        className="w-full h-full aspect-square object-cover rounded select-none"
-                        src={product ? `http://localhost:5000/${product.images.stockImage}` : undefined}
-                        alt={product?.name || "Producto"}
-                    />
+    // Si no hay producto selecionado o está cargando, entonces se muestra un placeholder de carga.
+    if (loading || !product) {
+        return (
+            <section className="w-full h-full flex items-center justify-center bg-gray-900 text-white">
+                <span className="text-xl animate-pulse">Cargando...</span>
+            </section>
+        );
+    }
+
+    return (
+        <section
+            className="w-full h-full flex flex-col gap-4 max-w-450 mx-auto p-2
+             rounded-lg overflow-y-auto border border-black bg-gray-900 text-white"
+            style={{
+                scrollbarWidth: "thin",
+                scrollbarColor: "#4a90e2 #2d3748",
+                scrollBehavior: "smooth",
+            }}
+        >
+            {/* ---------------- IMÁGENES + INFO ---------------- */}
+            <article className="w-full flex flex-col lg:flex-row gap-4 p-3 rounded border border-black bg-gray-800">
+
+                {/* Carrusel */}
+                <div className="w-full h-100 lg:w-1/2 flex items-center justify-center">
+                    <ImageCarrousel product={product} />
                 </div>
 
-                <aside className="w-full h-full flex justify-between flex-col">
+                {/* Información */}
+                <aside className="w-full  flex flex-col justify-between">
                     <div>
-                        <span className="text-4xl font-semibold pl-1 w-full">
-                            {product ? product.name : "Cargando..."}
+                        <span className="text-3xl md:text-4xl font-semibold pl-1">
+                            {product.name}
                         </span>
-                        <p className="text-base text-gray-300 pt-3 pl-1 w-full">
-                            {product ? product.description : "Cargando..."}
+
+                        <p className="text-sm md:text-base text-gray-300 pt-3 pl-1">
+                            {product.description}
                         </p>
                     </div>
 
-                    <div>
-                        <span className="text-3xl font-semibold pl-1 w-full">{product ? `$${product.price}` : "Cargando..."}</span>
-                        <div className="w-full gap-3 ml-1 flex flex-row items-center">
+                    {/* Precio + botones */}
+                    <div className="flex flex-col gap-3">
+                        <span className="text-2xl md:text-3xl font-semibold pl-1">
+                            ${product.price}
+                        </span>
+
+                        <div className="w-full flex flex-row gap-3 ml-1">
                             <ButtonModel
                                 type="onlyIcon"
                                 iconName="star"
                                 defaultColor="text-white"
                                 activeColor="text-yellow-400"
-                                buttonFunction={(e) => {
-                                    e.stopPropagation();
-                                    console.log("Favorito");
-                                }}
+                                buttonFunction={() => console.log("Favorito")}
                             />
 
                             <ButtonModel
                                 type="primary"
                                 iconName="cart"
                                 text="Agregar Producto"
-                                buttonFunction={(e) => {
-                                    e.stopPropagation();
-                                    console.log("Comprar");
-                                }}
+                                buttonFunction={() => console.log("Comprar")}
                             />
                         </div>
                     </div>
                 </aside>
             </article>
-            <article className="w-full flex flex-col items-center gap-4 rounded p-2 border border-black bg-gray-800">
-                <span className="w-full text-2xl">Detalles</span>
-                <ProductDetail />
+
+            {/* ---------------- 3D VIEWER + DETALLES ---------------- */}
+            <article className="w-full flex flex-col gap-4 p-3 rounded border border-black bg-gray-800">
+                <section className='flex flex-col lg:flex-row gap-5'>
+                    {/* Visor 3D */}
+                    <div className="w-full">
+                        <ModelViewer
+                            key={product._id}
+                            url={`http://localhost:5000/${product.objectURL}`}
+                            canAutoRotate={true}
+                            canZoom={false}
+                            canRotate={false}
+                            canPan={false}
+                            component={interactionButton(true, product.objectURL)}
+                        />
+                    </div>
+                    <Details />
+                </section>
+
+                {/* Preguntas */}
+                <section className="w-full flex flex-col gap-2">
+                    <span className="text-2xl">Preguntas Frecuentes</span>
+                    <ProductQuestions />
+                </section>
             </article>
         </section>
-    )
-}
+    );
+};
 
 export default ProductDetails;
